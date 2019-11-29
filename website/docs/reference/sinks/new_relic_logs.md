@@ -18,7 +18,7 @@ unsupported_operating_systems: []
      website/docs/reference/sinks/new_relic_logs.md.erb
 -->
 
-The `new_relic_logs` sink [batches](#buffers-and-batches) [`log`][docs.data-model#log] events to the New Relic log API.
+The `new_relic_logs` sink [batches](#buffers-and-batches) [`log`][docs.data-model#log] events to [New Relic][urls.new_relic] via their [log API][urls.new_relic_log_api].
 
 ## Configuration
 
@@ -500,7 +500,7 @@ The amount of time to wait before attempting a failed request again. See [Retry 
 
 ## Output
 
-The `new_relic_logs` sink [batches](#buffers-and-batches) [`log`][docs.data-model#log] events to the New Relic log API.
+The `new_relic_logs` sink [batches](#buffers-and-batches) [`log`][docs.data-model#log] events to [New Relic][urls.new_relic] via their [log API][urls.new_relic_log_api].
 Batches are flushed via the [`batch_size`](#batch_size) or
 [`batch_timeout`](#batch_timeout) options. You can learn more in the [buffers &
 batches](#buffers--batches) section.
@@ -580,3 +580,5 @@ attempts and backoff rate with the[`retry_attempts`](#retry_attempts) and[`retry
 [docs.data-model#log]: /docs/about/data-model#log
 [docs.guarantees]: /docs/about/guarantees
 [urls.new_new_relic_logs_sink_issue]: https://github.com/timberio/vector/issues/new?labels=sink%3A+new_relic_logs
+[urls.new_relic]: https://newrelic.com/
+[urls.new_relic_log_api]: https://docs.newrelic.com/docs/logs/new-relic-logs/log-api/introduction-log-api

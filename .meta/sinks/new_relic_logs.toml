@@ -15,7 +15,7 @@ retry_attempts = 10
 retry_backoff_secs = 1
 request_in_flight_limit = 10
 request_timeout_secs = 30
-write_to_description = "the New Relic log API"
+write_to_description = "[New Relic][urls.new_relic] via their [log API][urls.new_relic_log_api]"
 
 [sinks.new_relic_logs.options.license_key]
 type = "string"

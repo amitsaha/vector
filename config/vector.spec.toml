@@ -3024,7 +3024,7 @@ end
     # * type: string
     key_path = "/path/to/host_certificate.key"
 
-# Batches `log` events to the New Relic log API.
+# Batches `log` events to New Relic via their log API.
 [sinks.new_relic_logs]
   #
   # General
