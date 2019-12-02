@@ -1,9 +1,7 @@
 use crate::{
     buffers::Acker,
     sinks::http::{Encoding, HttpMethod, HttpSinkConfig},
-    sinks::util::{
-        BatchConfig, Compression,
-    },
+    sinks::util::{BatchConfig, Compression},
     topology::config::{DataType, SinkConfig, SinkDescription},
 };
 use indexmap::IndexMap;
@@ -59,11 +57,17 @@ impl SinkConfig for NewRelicLogsConfig {
         };
 
         let batch_conf = BatchConfig {
-            batch_size: Some(self.batch.batch_size.unwrap_or(bytesize::mib(10u64) as usize)), // TODO
-            batch_timeout: Some(self.batch.batch_timeout.unwrap_or(1)), // TODO
+            // The max request size is 10MiB, so in order to be comfortably
+            // within this we batch up to 5MiB.
+            batch_size: Some(
+                self.batch
+                    .batch_size
+                    .unwrap_or(bytesize::mib(5u64) as usize),
+            ),
+            batch_timeout: self.batch.batch_timeout, // Default is fine.
         };
 
-        let http_conf = HttpSinkConfig{
+        let http_conf = HttpSinkConfig {
             uri: uri.to_owned(),
             method: Some(HttpMethod::Post),
             healthcheck_uri: None,
@@ -74,12 +78,12 @@ impl SinkConfig for NewRelicLogsConfig {
 
             batch: batch_conf,
 
-            request_in_flight_limit: self.request_in_flight_limit, // TODO
-            request_timeout_secs: self.request_timeout_secs, // TODO
-            request_rate_limit_duration_secs: self.request_rate_limit_duration_secs, // TODO
-            request_rate_limit_num: self.request_rate_limit_num, // TODO
-            request_retry_attempts: self.request_retry_attempts, // TODO
-            request_retry_backoff_secs: self.request_retry_backoff_secs, // TODO
+            request_in_flight_limit: Some(self.request_in_flight_limit.unwrap_or(100)),
+            request_timeout_secs: self.request_timeout_secs, // Default is fine.
+            request_rate_limit_duration_secs: self.request_rate_limit_duration_secs, // Default is fine.
+            request_rate_limit_num: Some(self.request_rate_limit_num.unwrap_or(100)),
+            request_retry_attempts: self.request_retry_attempts, // Default is fine.
+            request_retry_backoff_secs: self.request_retry_backoff_secs, // Default is fine.
 
             tls: None,
         };
